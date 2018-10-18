@@ -38,7 +38,10 @@ def main() -> int:
     parser.add_argument("--ignore", nargs="+", help="Ignore these test inputs.")
     args = parser.parse_args()
 
-    ignored: List[str] = list(map(os.path.normpath, args.ignore))
+    try:
+        ignored: List[str] = list(map(os.path.normpath, args.ignore))
+    except TypeError:
+        ignored: List[str] = []
 
     command = [sys.executable, "src/rockstar.py"]
 
