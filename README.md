@@ -13,6 +13,7 @@ Plus we can make stickers. Who doesn't want a sticker on their laptop saying 'CE
 ## What's here?
 
 * The [Rockstar language specification](spec.md)
+* How to [contribute to Rockstar](CONTRIBUTING.md)
 * Some [examples of Rockstar programs](examples/README.md)
 
 ## Implementations
@@ -33,9 +34,10 @@ Plus we can make stickers. Who doesn't want a sticker on their laptop saying 'CE
 * [chirp](https://github.com/Suloch/chirp) - Rockstar interpreter in C using flex and yaac
 * [sellout](https://github.com/davidadsit/sellout) - Rockstar to C# (dotnet core) transpiler
 * [native-rockstar](https://github.com/gillesdami/native-rockstar) - Rockstar to C++ transpiler in javascript.
+* [rokkstar](https://github.com/ascheja/rokkstar) - Rockstar parser and interpreter written in Kotlin.
 
 ## Social Spaces
-
+* [Rockstar on Rosetta Code](http://www.rosettacode.org/wiki/Category:Rockstar)
 * [/r/RockstarDevs](https://www.reddit.com/r/RockstarDevs/) - Subreddit
 * [Rockstar Developers](https://discordapp.com/invite/xsQK7UU) - Discord Group
 
@@ -46,6 +48,8 @@ Plus we can make stickers. Who doesn't want a sticker on their laptop saying 'CE
 * [Rockstar on /r/ProgrammerHumor](https://www.reddit.com/r/ProgrammerHumor/comments/934uvw/why_yes_i_am_a_certified_rockstar_developer/)
 * [Rockstar on dice.com](https://insights.dice.com/2018/07/27/rockstar-programming-language-developers/)
 * [The Rockstar Programming Language | Mitigated Frenzy](https://bparsia.wordpress.com/2018/09/11/the-rockstar-programming-language/) - see also their solution to the [Rainfall problem](https://bparsia.wordpress.com/2018/09/12/rockstar-rainfall-problem/#comment-1624)
+* [Rockstar reference on Coding Blocks Podcast](https://www.codingblocks.net/podcast/lightning-talks/)
+* [Rockstar on .NET Rocks! Podcast](https://www.dotnetrocks.com/?show=1636)
 
 ## See Also
 

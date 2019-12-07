@@ -6,7 +6,6 @@ Rockstar is intended to give the programmer an unprecedented degree of poetic li
 
 Rockstar programs are [UTF-8](https://en.wikipedia.org/wiki/UTF-8) files with the `.rock` file extension. *(Given that for everything included in the current Rockstar specification, UTF-8 is indistinguishable from 7-bit ASCII, that's a fancy way of saying they're plain text files.)*
 
-
 ### Comments 
  
 The use of comments in Rockstar programs is strongly discouraged. This is rock'n'roll; it's up to the audience to find their own meaning. If you absolutely insist on commenting your Rockstar programs, comments should be contained in parentheses (). Yes, this means you can't use brackets in arithmetic expressions and may need to decompose complex expressions into multiple evaluations and assignments. 
@@ -14,18 +13,37 @@ The use of comments in Rockstar programs is strongly discouraged. This is rock'n
 Rockstar developers are not into that whole [brevity thing](https://www.urbandictionary.com/define.php?term=Brevity%20Thing). 
  
 ``` 
-Tommy was a lean mean wrecking machine.  (initialises Tommy with the value 14487) 
+(Initialise Tommy = 1337)
+Tommy was a big bad brother. 
 ``` 
  
 ### Variables
 
-There's two ways to declare and use variables in Rockstar. 
+Rockstar supports three kinds of variable names.
 
-**Common variables** consist of one of the keywords `a`, `an`, `the`, `my` or `your` followed by a unique variable name, which must contain only lowercase ASCII letters a-z. The keyword is part of the variable name, so `a boy` is a different variable from `the boy`.
+**Simple variables** are valid identifiers that are not language keywords. A simple variable name must contain only letters, and cannot contain spaces. Note that Rockstar does not allow numbers or underscores in variable names - remember the golden rule of Rockstar syntax: if you can't sing it, you can't have it. Simple variables are case-insensitive.
 
-**Proper variables** are proper nouns - any word that isn't a reserved keyword and starts with an uppercase letter. Proper variable names can contain spaces as long as each space is followed by an uppercase letter. Whilst some developers may use this feature to create variables with names like `Customer ID`, `Tax Rate` or `Distance In KM`, we recommend you favour idiomatic variable names such as `Tommy`, `Gina`, `Doctor Feelgood`, `Mister Crowley`, `Kayleigh`, `Tom Sawyer`, `Billie Jean` and `Janie`. 
+```
+Variable is 1
+Tommy is a rockstar
+X is 2
+Y is 3
+Put x plus y into result
+```
 
-(Although not strictly idiomatic, `Eleanor Rigby`, `Peggy Sue`, `Black Betty`, `Layla` and `Johnny B Goode` would also all be valid variable names in Rockstar.)
+**Common variables** consist of one of the keywords `a`, `an`, `the`, `my` or `your` followed by whitespace and a unique variable name, which must contain only lowercase ASCII letters a-z. The keyword is part of the variable name, so `a boy` is a different variable from `the boy`. Common variables are case-insensitive.
+
+```
+My variable is 5
+Your variable is 4
+
+Put my variable plus your variable into the total
+Shout the total
+```
+
+**Proper variables** are proper nouns - any word that isn't a reserved keyword and starts with an uppercase letter. Proper variable names can contain spaces as long as each space is followed by an uppercase letter. Whilst some developers may use this feature to create variables with names like `Customer ID`, `Tax Rate` or `Distance In KM`, we recommend you favour idiomatic variable names such as `Doctor Feelgood`, `Mister Crowley`,  `Tom Sawyer`, and`Billie Jean`. Proper variables are case-insensitive apart from the first letter of each word, which must be a capital letter.
+
+(Although not strictly idiomatic, `Eleanor Rigby`, `Peggy Sue`, `Black Betty`, and `Johnny B Goode` would also all be valid variable names in Rockstar.)
 
 As in Ruby, Python and VBScript, variables are dynamically typed and you don't need to declare variables before use.
 
@@ -33,7 +51,7 @@ If a variable is defined outside of a function, it is in global scope. Global sc
 
 While within a function, if you write to a variable that has been defined in global scope, you write to that variable, you do not define a new local variable.
 
-**Pronouns**
+#### Pronouns
 
 The keywords `it`, `he`, `she`, `him`, `her`, `they`, `them`, `ze`, `hir`, `zie`, `zir`, `xe`, `xem`, `ve`, and `ver` refer to the last named variable determined by parsing order. 
  
@@ -41,21 +59,153 @@ The keywords `it`, `he`, `she`, `him`, `her`, `they`, `them`, `ze`, `hir`, `zie`
 
 ### Types
 
-Rockstar uses a very similar type system to that defined by the [ECMAScript type system](http://www.ecma-international.org/ecma-262/5.1/#sec-8), except `undefined` doesn't sound very rock'n'roll so we use `mysterious` instead.
+Rockstar uses a similar type system to that defined by the [ECMAScript type system](http://www.ecma-international.org/ecma-262/5.1/#sec-8), except `undefined` doesn't sound very rock'n'roll so we use `mysterious` instead.
 
 * **Mysterious** - the value of any variable that hasn't been assigned a value, denoted by the keyword `mysterious`
 * **Null** - the null type. Evaluates as equal to zero and equal to false. The keywords `nothing`, `nowhere`, `nobody`, `empty` and `gone` are defined as aliases for `null`
 * **Boolean** - a logical entity having two values `true` and `false`. *(The keywords `maybe` and `definitely maybe` are reserved for future use)*
  * `right`, `yes` and `ok` are valid aliases for `true`
  * `wrong`, `no` and `lies` are valid aliases for `false`
-* **Number** - Numbers in Rockstar are stored using the [DEC64](http://www.dec64.com/) numeric type. The number internally is the closest representable number of the DEC64 type.
+* **Number** - Numbers in Rockstar are double-precision floating point numbers, stored according to the [IEEE 754](https://en.wikipedia.org/wiki/IEEE_754) standard. *(An earlier version of this spec proposed that Rockstar used the [DEC64](http://www.dec64.com/) numeric type. This is a perfect example of something that seemed like a great idea after a couple of beers but turns out to be prohibitively difficult to implement...)*
 * **String** - Rockstar strings are sequences of 16-bit unsigned integer values representing UTF-16 code units.
 
-Functions are just objects with a function call operator.
+Functions and function identifiers are not strictly part of the type system in Rockstar 1.0.
+
+## Arrays
+
+Rockstar supports JavaScript-style arrays. Arrays are zero-based, and dynamically 
+allocated when values are assigned using numeric indexes.
+
+```$rockstar
+Let the array at 0 be "zero"
+Let the array at 1 be "one"
+Let the array at 255 be "big"
+Shout the array at 0
+Shout the array at 255
+```
+
+Returning an array in a scalar context will return the current length of the array:
+
+```$rockstar
+Let my array at 255 be "some value"
+Shout my array (will print the value 256)
+```
+
+Rockstar also supports non-numeric array keys, so it is valid to say:
+
+```
+let my array at "some_key" be "some_value"
+Shout my array at "some_key"
+```
+
+You can mix string and numeric keys within the same array. The array length property 
+ignores any non-numeric keys:
+
+```
+Let my array at "some_key" be "some_value"
+Shout my array (will print 0, since there are no numeric indexes)
+Let my array at 7 be "some other value"
+Shout my array (will now print 8, since assigning my array at 7 modifies the array length)
+```
+
+You can also use array index syntax to read (but not write) specific characters from a string
+
+```$
+Let my string be "abcdefg"
+Shout my string at 0 (will print "a")
+Shout my string at 1 (will print "b")
+Let the character be my string at 2
+```
+
+### Splitting strings and type conversions
+
+#### A note about mutations
+
+Some operations in Rockstar will either act in-place, modifying the variable passed to them, or will leave the
+source variable unmodified and place their output into a target variable. These operations are known as mutation 
+operations, and they all have the syntax
+
+* `Modify X` - acts in-place 
+* `Modify X into Y` - leave `X` alone and put modified output into `Y`
+* `Modify X with Z` - modify `X` in-place, with optional parameter `Z`
+* `Modify X into Y with Z` - modify `X`, using parameter `Y`, and put results in `Z`
+
+Note that in-place mutations are **only valid where the first argument is a variable**:
+
+#### Splitting Strings
+
+To split a string in Rockstar, use the `cut` mutation (aliases `split` and `shatter`)
+
+String splitting can either operate in-place, or place results into an output variable.
+You can specify an optional delimiter; if no delimiter is provided, the string is split
+into a character array.
+
+```
+Split "a,b,c" into the array (the array is ["a", ",", "b", ",", "c"])
+Split "a,b,c" into the array with "," (the array is ["a", "b", "c"])
+Split my string (my string will split in-place to an array of characters)
+Split my string with x (split my string in-place using the current value of x as a delimiter)
+
+Cut my life into pieces 
+  (split my life, put the resulting array in pieces)
+
+Cut your cake with my knife
+  (modify your cake in-place, by splitting it using my knife as a delimiter)
+
+Shatter my heart into pieces with your lies
+   (Split my heart, using your lies as a delimiter, and put the result into pieces)
+```
+
+In-place string splitting is only valid when the first argument is a variable; the 
+following would be invalid (because where would the result actually go?)
+
+```$
+Split "a,b,c,d,e" with "," (NOT VALID - nowhere to place the output)
+Split "a,b,c,d,e" into tokens with "," (valid - tokens now contains ["a","b","c","d","e"])
+```
+
+#### Joining Arrays
+
+To join an array in Rockstar, use the `join` mutation, or the alias `unite`
+
+```
+Let the string be "abcde"
+Split the string into tokens
+Join tokens with ";"
+    (the tokens now contains "a;b;c;d;e")
+
+The input says hey now hey now now
+Split the input into words with " "
+Unite words into the output with "! "
+    (the output now contains "hey! now! hey! now! now!")
+```
+
+#### Parsing numbers and character codes
+
+Use the `cast` mutation to parse strings into numbers, or to convert numbers into their corresponding Unicode characters.
+
+```$rockstar
+Let X be "123.45"
+Cast X
+    (X now contains the numeric value 123.45)
+Let X be "ff"
+Cast X with 16
+    (X now contains the numeric value 255 - OxFF)
+Cast "12345" into result
+    (result now contains the number 12345)
+Cast "aa" into result with 16
+    (result now contains the number 170 - 0xAA)
+
+Cast 65 into result
+    (result now contains the string "A" - ASCII code 65)
+
+Cast 1046 into result
+    (result now contains the Cyrillic letter "Ж" - Unicode code point 1046)
+```
 
 ### Truthiness
 
-The results of comparisons often rely on a concept called 'Truthiness'. If the value is truthy, it will be implicitly converted to true. If it is falsy, it will be implicitly converted to false.
+The results of comparisons often rely on a concept called 'truthiness'. If the value is truthy, it will be implicitly converted to true. If it is falsy, it will be implicitly converted to false.
 
 - Mysterious - Falsy
 - Null - Falsy
@@ -67,7 +217,12 @@ The results of comparisons often rely on a concept called 'Truthiness'. If the v
 
 Words that are used to construct a literal of a certain type are referred to as **constants** and words that are used to construct various syntax constructs are referred to as **keywords**
 
-- Constants: `mysterious`, `null`, `nothing`, `nowhere`, `nobody`, `empty`, `gone`, `true`, `right`, `yes`, `ok`, `false`, `wrong`, `no`, `lies`, `maybe`, `definitely maybe`
+| Constant      | Aliases
+| --------      |  ------- |
+| `mysterious`  | -      |
+| `null`        |  `nothing`, `nowhere`, `nobody`, `empty`, `gone` |
+| `true`,       |  `right`, `yes`, `ok` |
+| `false`       |  `wrong`, `no`, `lies` |
 		
 ### Literals and Assignment
 
@@ -80,10 +235,14 @@ Numeric literals in Rockstar are written as decimal numbers
 * `123`
 * `3.141592654`
 
-Assignment is denoted by the `put/into` keyword combination:
+Assignment is done using either `put <expression> into <variable>` or `let <variable> be <expression>`:
+
 
 * `Put 123 into X` will assign the value `123` to the variable `X`
 * `Put "Hello San Francisco" into the message` will assign the value `"Hello San Francisco"` to the variable `the message`
+* `Let my balance be 1000000` will store the value `1000000` in the variable `my balance`
+* `Let the survivors be the brave without the fallen` will subtract `the fallen` from `the brave` and store the result in `the survivors`
+
 
 #### Single Quotes
 
@@ -106,16 +265,16 @@ Increment and decrement are supported by the `Build {variable} up` and `Knock {v
 * `Knock the walls down` will decrement the value stored in `the walls` by 1
 * `Knock the walls down, down` will decrement the value stored in `the walls` by 2
  
-#### Arithmetic
+#### Operators
 
-Basic arithmetic is provided by the `plus`, `minus`, `times` and `over` keywords.
+Rockstar supports the infix arithmetic operators `+`, `-`, `*` and `/`. The language includes aliases for each operator so you can write lyrically pleasing expressions.
 
-Arithmetic expressions:
-
-* `{a} plus {b}` - addition. Alias `with`
-* `{a} minus {b}` - subtraction. Alias `without`
-* `{a} times {b}` - multiplication. Alias `of`
-* `{a} over {b}` - division. Aliases TBC.
+| Operator  | Operation         | Aliases |
+| --  | ---------         | ------- |
+| +   | addition          | `plus`, `with` |
+| -   | subtraction       | `minus`, `without` |
+| *   | multiplication    | `times`, `of` |
+| /   | division          | `over`  |
 
 The alias `by` has been explicitly rejected because of disagreements between the colloquial English `ten by four` (i.e. `10*4 = 40`) and `ten (divided) by four` (i.e. `10/4 = 2.5`)
 
@@ -129,13 +288,74 @@ Examples:
 
 * `My heart over the moon` - Returns `my heart` divided by `the moon`
 
+#### Compound Assignment Operators
+
+As in many C-style languages, Rockstar supports compound assignment operators, providing a terser syntax for storing the result of an operation. This is done using the `let` keyword.
+
+* `Let X be with 10` - add `10` to `X` and store the result in `X`. (Equivalent to `X += 10`)
+* `Let the children be without fear` - subtract `fear` from `the children` and store the result in `the children`
+* `Let my heart be over the moon` - equivalent to `my heart /= the moon`
+
+#### Arithmetic Rounding
+
+Rounding in Rockstar is performed by the `turn` keyword. `Turn up` will round up (i.e. towards positive infinity), to the nearest integer; `turn down` will round down (towards negative infinity) to the nearest integer, and `turn round` will round to the nearest integer. Bonnie Tyler enthusiasts will be pleased to note that Rockstar accepts `turn around` as a valid alias.
+
+Turn operations act in-place: they modify the variable directly, and will return the rounded value.
+
+```
+X is 1.2
+Turn up X
+Shout X (will print 2)
+
+X is 1.2
+Turn down X
+Shout X (will print 1)
+
+The radio's playing. The night has just begun. 
+ (initialises the radio with 7.35345)
+Turn up the radio
+Say the radio (will print 8)
+```
+Rounding supports variable [pronouns](#pronouns), so you can write phrases like:
+
+```
+My heart is on fire. Aflame with desire.
+Turn it up.
+Shout it.
+```
+
+which will print the value 25 (obviously).
+
+#### List Arithmetic
+
+Rockstar operators support a list of expressions on the right-hand side of the operator. (Imagine explaining in English that, say, "the restaurant bill is the food, plus the drinks, the service and the tax" - same idea.)
+
+* `Let X be 1 with 2, 3, 4` - shorthand for `X = 1 + 2 + 3 + 4`
+* `Let X be "foo" with "bar", and "baz"` - X will be `"foo" + "bar" + "baz"`
+
+You can combine list arithmetic with compound assignment, as with this example:
+
+```
+The wolf is hungry, out on the street (initialise the_wolf = 63236)
+Fear is the mind killer (fear = 346)
+Fury is the demon child (fury = 355)
+Hate is the only truth (hate = 345)
+Let the wolf be without fear, fury, and hate (the_wolf = the_wolf - 346 - 355 - 345) 
+Shout the wolf (output 62190)
+```
+
+List arithmetic is only possible where the result type supports further operations.
+
+* `Let X be "foo" times 2, 2, 2` - OK; X is `"foofoofoofoofoofoofoofoo"`
+* `Let X be 2 times "foo", "bar"` - is `mysterious` (because `2 * foo = "foofoo"`, and `"foofoo" * "bar"` is undefined)
+
 #### Poetic Literals
 
 Rockstar also supports a unique language feature known as **poetic literals**. Inspired by the [here-document](https://en.wikipedia.org/wiki/Here_document) syntax supported by many scripting languages, poetic literals allow the programmer to simultaneously initialize a variable and express their innermost angst.
 
-##### Poetic Type Literals
+##### Poetic Constant Literals
 
-A poetic type assignment is a single line consisting of a variable name, the `is` keyword, or the aliases `was` or `were`, and a Literal Word signifying the value the variable will be set to.
+A poetic constant literal is a single line consisting of a variable name, the `is` keyword, or the aliases `are`, `was` or `were`, and a constant signifying the value the variable will be set to.
 
 * `My heart is true` - initialises the variable `my heart` with the Boolean value `true` 
 * `Tommy is nobody` - initialises the variable `Tommy` with the value `null` using the `nobody` alias
@@ -158,6 +378,8 @@ A poetic number literal begins with a variable name, followed by the keyword `is
 * `My dreams were ice. A life unfulfilled; wakin' everybody up, taking booze and pills` - initialises `my dreams` with the value `3.1415926535`
 * `Tommy was without` initialises `Tommy` with the value `7` because `without` is a Reserved Keyword, but not a Literal Word.
  * Note that poetic literals **can** include Reserved Keywords, as with `taking` in this example.
+ * The hyphen (`-`) is counted as a letter – so you can use terms like 'all-consuming' (13 letters > 3) and
+  'power-hungry' (12 letters > 2) instead of having to think of 12- and 13-letter words.
  * The semi-colon, comma, apostrophe and any other non-alphabetical characters are ignored.
 
 ### Comparison
@@ -229,7 +451,7 @@ Ordering comparisons (`is higher than`, `is lower than`, `is as high as`, and `i
 - \<Mysterious\> \<op\> Mysterious =\> Equal.
 - \<Non-Mysterious\> \<op\> Mysterious =\> Non equal.
 - String \<op\> Number =\> Convert the string to a number using base 10 with leading zeros ignored. If it fails, return false.
-- String \<op\> Boolean =\> Convert the string to a boolean using all defined aliases.
+- String \<op\> Boolean =\> Convert the string to a boolean. The empty string is false; all other strings are true.
 - String \<op\> Null =\> Non equal.
 - Number \<op\> Boolean =\> Convert number to boolean by "truthiness".
 - Number \<op\> Null =\> Convert null to 0.
