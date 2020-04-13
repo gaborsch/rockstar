@@ -20,6 +20,7 @@ Plus we can make stickers. Who doesn't want a sticker on their laptop saying 'CE
 
 * [rockstar-js](https://github.com/wolfgang42/rockstar-js) - Rockstar-to-JavaScript transpiler
 * [rockstar-lexer](https://github.com/aitorres/rockstar-lexer) - Rockstar lexer written in Haskell with Alex
+* [rocky](https://github.com/gaborsch/rocky) - Fully compatible Rockstar interpreter written in Java. Also includes OOP for Rockstar.
 * [rockstar-java](https://github.com/nbrevu/rockstar-java) - Rockstar interpreter in Java
 * [rockstar-ml](https://github.com/lkwq007/rockstar-ml) - Rockstar interpreter in OCaml
 * [rockstar-py](https://github.com/yanorestes/rockstar-py) - Rockstar-to-Python transpiler
